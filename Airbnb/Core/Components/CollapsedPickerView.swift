@@ -1,3 +1,12 @@
+//
+//  CollapsedPickerView.swift
+//  Airbnb
+//
+//  Created by Mac on 01/01/2025.
+//
+
+import SwiftUI
+
 struct CollapsedPickerView: View {
     var title: String
     var description: String
@@ -15,10 +24,14 @@ struct CollapsedPickerView: View {
             }
             .fontWeight(.semibold)
         }
-        .padding()
-        .background(.white)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .padding()
-        .shadow(radius: 10)
+//        .padding()
+//        .background(.white)
+//        .clipShape(RoundedRectangle(cornerRadius: 12))
+//        .padding()
+//        .shadow(radius: 10)
     }
+}
+
+#Preview {
+    CollapsedPickerView(title: "When", description: "Add Date")
 }
