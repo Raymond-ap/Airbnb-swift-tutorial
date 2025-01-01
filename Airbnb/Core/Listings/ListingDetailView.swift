@@ -74,7 +74,7 @@ struct ListingDetailView: View {
             
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Elegant villa hosted by John Doe")
+                    Text("Amazing Villa hosted by John Doe")
                         .font(.headline)
                         .frame(width: 250, alignment: .leading)
                     
