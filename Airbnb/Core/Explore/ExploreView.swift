@@ -17,27 +17,31 @@ struct ExploreView: View {
                 DestinationSearchView(closeSearchView: $showDestinationView)
                     
             } else {
-                ScrollView {
+                VStack {
                     SearchFilterbar()
                         .onTapGesture {
                             withAnimation(.snappy) {
                                 showDestinationView.toggle()
                             }
                         }
+
                     
-                    LazyVStack(spacing: 35) {
-                        ForEach(0...10, id: \.self) { listing in
-                            NavigationLink(value: listing) {
-                                ListingItemView()
+                    ScrollView {
+                        LazyVStack(spacing: 35) {
+                            ForEach(0...10, id: \.self) { listing in
+                                NavigationLink(value: listing) {
+                                    ListingItemView()
+                                }
                             }
                         }
+                        .padding()
                     }
-                    .padding()
+                    .navigationDestination(for: Int.self) { listing in
+                        ListingDetailView()
+                            .navigationBarHidden(true)
+                    }
                 }
-                .navigationDestination(for: Int.self) { listing in
-                    ListingDetailView()
-                        .navigationBarHidden(true)
-                }
+
             }
         }
     }

@@ -69,7 +69,7 @@ struct DestinationSearchView: View {
                             .foregroundStyle(Color(.systemGray4))
                     }
                 } else {
-                    CollapsedPickerView(title: "where", description: "Add destination")
+                    CollapsedPickerView(title: "Where", description: "Add destination")
                 }
                 
                 

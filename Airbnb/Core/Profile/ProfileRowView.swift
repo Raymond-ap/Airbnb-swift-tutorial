@@ -8,11 +8,28 @@
 import SwiftUI
 
 struct ProfileRowView: View {
+    var imageName: String
+    var title: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            HStack {
+                Image(systemName: imageName)
+                
+                Text(title)
+                    .font(.subheadline)
+                
+                Spacer()
+
+                Image(systemName: "chevron.right")
+            }
+            
+            Divider()
+            
+        }
     }
 }
 
 #Preview {
-    ProfileRowView()
+    ProfileRowView(imageName: "gear", title: "Settings")
 }
