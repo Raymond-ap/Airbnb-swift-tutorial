@@ -15,6 +15,9 @@ struct DestinationSearchView: View {
     @Binding var closeSearchView: Bool
     @State private var destination = ""
     @State private var selectedOption: DestinationOptions = .location
+    @State private var startDate = Date()
+    @State private var endDate = Date()
+    @State private var numberOfGuests = 2
     
     var body: some View {
         VStack {
@@ -30,6 +33,16 @@ struct DestinationSearchView: View {
                 }
                 
                 Spacer()
+                
+                if !destination.isEmpty {
+                    Button {
+                        destination = ""
+                    } label: {
+                        Text("Clear")
+                            .foregroundStyle(.black)
+                        
+                    }
+                }
                 
                 
             }
@@ -61,12 +74,8 @@ struct DestinationSearchView: View {
                 
                 
             }
-            .padding()
+            .modifier(DestinationViewModifier())
             .frame(height: selectedOption == .location ? 120 : 64)
-            .background(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .padding()
-            .shadow(radius: 10)
             .onTapGesture {
                 withAnimation(.snappy) {
                     selectedOption = .location
@@ -75,25 +84,32 @@ struct DestinationSearchView: View {
             
             
             // Date
-            VStack {
+            VStack(alignment: .leading) {
                 if selectedOption == .dates {
-                    HStack {
-                        Text("Main view")
+                    Text("When's your trip?")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .padding(.bottom)
+                    
+                    VStack {
+                        DatePicker("From", selection: $startDate, displayedComponents: .date)
                         
-                        Spacer()
-
+                        Divider()
+                        
+                        DatePicker("To", selection: $endDate, displayedComponents: .date)
                     }
+                    .foregroundStyle(.gray)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    
+
                 } else {
                     CollapsedPickerView(title: "When", description: "Add dates")
                        
                 }
             }
-            .padding()
-            .frame(height: selectedOption == .dates ? 120 : 64)
-            .background(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .padding()
-            .shadow(radius: 10)
+            .modifier(DestinationViewModifier())
+            .frame(height: selectedOption == .dates ? 160 : 64)
             .onTapGesture {
                 withAnimation(.snappy) {
                     selectedOption = .dates
@@ -102,23 +118,29 @@ struct DestinationSearchView: View {
 
             
             // guest
-            VStack {
-                if selectedOption == .dates {
-                    HStack {
-                        Text("Main view")
-                        
-                        Spacer()
+            VStack(alignment: .leading) {
+                if selectedOption == .members {
+                    Text("Who's coming?")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .padding(.bottom)
+                    
+                    Stepper {
+                        Text("\(numberOfGuests) Adults")
+                    } onIncrement: {
+                        numberOfGuests += 1
+                    } onDecrement: {
+                        if numberOfGuests > 0 {
+                            numberOfGuests -= 1
+                        }
                     }
+
                 } else {
                     CollapsedPickerView(title: "Who", description: "Add guests")
                 }
             }
-            .padding()
-            .frame(height: selectedOption == .members ? 120 : 64)
-            .background(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .padding()
-            .shadow(radius: 10)
+            .modifier(DestinationViewModifier())
+            .frame(height: selectedOption == .members ? 170 : 64)
             .onTapGesture {
                 withAnimation(.snappy) {
                     selectedOption = .members
@@ -132,6 +154,7 @@ struct DestinationSearchView: View {
         
     }
 }
+
 
 #Preview {
     DestinationSearchView(closeSearchView: .constant(true))
